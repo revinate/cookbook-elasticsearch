@@ -13,8 +13,8 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="ElasticSearch daemon"
 NAME=elasticsearch
 DAEMON=/usr/local/bin/elasticsearch
-DAEMON_ARGS="-p $PIDFILE"
 PIDFILE='<%= node.elasticsearch[:pid_file] %>'
+DAEMON_ARGS="-p $PIDFILE"
 ES_INCLUDE='<%= node.elasticsearch[:path][:conf] %>/elasticsearch-env.sh'
 SCRIPTNAME=/etc/init.d/$NAME
 
