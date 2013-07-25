@@ -1,0 +1,3 @@
+# ElasticSearch ulimit settings - managed by Chef, so do not manually edit these as your changes will be overwritten
+<%= node[:elasticsearch][:user] %>     -    nofile    <%= node[:elasticsearch][:limits][:nofile] %>
+<%= node[:elasticsearch][:user] %>     -    memlock   <%= node[:elasticsearch][:limits][:memlock] %>

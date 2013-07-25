@@ -1,0 +1,3 @@
+# Elasticsearch defaults - Chef-managed so do not modify directly!
+ulimit -n <%= node[:elasticsearch][:limits][:nofile] %>
+ulimit -l <%= node[:elasticsearch][:limits][:memlock] %>

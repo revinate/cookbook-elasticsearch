@@ -13,6 +13,9 @@ if [ -f /etc/sysconfig/network ]; then source /etc/sysconfig/network; fi
 # Exit if networking is not up
 [ "$NETWORKING" = "no" ] && exit
 
+# Source elasticsearch defaults
+if [ -f /etc/default/elasticsearch ]; then source /etc/default/elasticsearch; fi
+
 PIDFILE='<%= node.elasticsearch[:pid_file] %>'
 ES_INCLUDE='<%= node.elasticsearch[:path][:conf] %>/elasticsearch-env.sh'
 CHECK_PID_RUNNING=$(ps ax | grep 'java' | grep -e "es.pidfile=$PIDFILE" | sed 's/^\s*\([0-9]*\)\s.*/\1/')
@@ -32,11 +35,7 @@ start() {
     fi
 
     echo -e "\033[1mStarting elasticsearch...\033[0m"
-    <% if node.platform_family == 'debian' %>
-    ES_INCLUDE=$ES_INCLUDE start-stop-daemon --background --start --quiet --pidfile $PIDFILE --chuid <%= node[:elasticsearch][:user] %> --exec /usr/local/bin/elasticsearch -- -p $PIDFILE
-    <% else %>
     su <%= node[:elasticsearch][:user] %> -c "ES_INCLUDE=$ES_INCLUDE /usr/local/bin/elasticsearch -p $PIDFILE"
-    <% end %>
 
     return $?
 }
